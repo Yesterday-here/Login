@@ -325,31 +325,52 @@
 	    window.location.href = 'admin.html'; // Redirect to admin page
 	});        
         
-	document.getElementById('registerFormElem').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                alert('Password dan konfirmasi password tidak cocok!');
-                return;
-            }
+// Di form login submission
+document.getElementById('loginFormElem').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
 
-	// Setelah login/register berhasil
-	localStorage.setItem('currentUser', JSON.stringify({
-	    email: email,
-	    name: name,
-	    role: 'user' // atau 'admin' untuk akun admin
-	}));
+    // Simulasi login berhasil
+    localStorage.setItem('currentUser', JSON.stringify({
+        email: email,
+        name: email.split('@')[0],
+        role: email === 'admin@bookstore.com' ? 'admin' : 'user'
+    }));
 
-	// Redirect berdasarkan role
-	if (userRole === 'admin') {
-	    window.location.href = 'admin.html';
-	    } else {
-	    window.location.href = 'index.html';
-	}            
-        
-	    alert('Pendaftaran berhasil!');
+    // Redirect berdasarkan role
+    if (email === 'admin@bookstore.com') {
+        window.location.href = 'admin.html';
+    } else {
+        window.location.href = 'index.html';
+    }
+       });
+
+    // Di form registrasi submission  
+    document.getElementById('registerFormElem').addEventListener('submit', function(e) {
+	    e.preventDefault();
+	    const name = document.getElementById('fullName').value;
+	    const email = document.getElementById('registerEmail').value;
+	    const password = document.getElementById('registerPassword').value;
+	    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    if (password !== confirmPassword) {
+        alert('Password dan konfirmasi password tidak cocok!');
+        return;
+    }
+    
+    // Simulasi registrasi berhasil
+    localStorage.setItem('currentUser', JSON.stringify({
+        email: email,
+        name: name,
+        role: 'user'
+    }));
+    
+    window.location.href = 'index.html';
+        });        
+	
+    alert('Pendaftaran berhasil!');
             // Di sini Anda bisa menambahkan logika pendaftaran
         });
     </script>
