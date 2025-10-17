@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Pemrograman JavaScript",
+    "author": "John Doe",
+    "price": 120000,
+    "stock": 15,
+    "image": "https://via.placeholder.com/300x400/111154/ffffff?text=JavaScript",
+    "category": "Pemrograman"
+  },
+  {
+    "id": 2,
+    "title": "Desain UI/UX Modern",
+    "author": "Jane Smith",
+    "price": 95000,
+    "stock": 8,
+    "image": "https://via.placeholder.com/300x400/111154/ffffff?text=UI/UX",
+    "category": "Desain"
+  },
+  {
+    "id": 3,
+    "title": "Machine Learning untuk Pemula",
+    "author": "Robert Brown",
+    "price": 150000,
+    "stock": 12,
+    "image": "https://via.placeholder.com/300x400/111154/ffffff?text=ML",
+    "category": "Data Science"
+  },
+  {
+    "id": 4,
+    "title": "Database Management",
+    "author": "Lisa Johnson",
+    "price": 110000,
+    "stock": 5,
+    "image": "https://via.placeholder.com/300x400/111154/ffffff?text=Database",
+    "category": "Pemrograman"
+  },
+  {
+    "id": 5,
+    "title": "Web Development Modern",
+    "author": "Mike Wilson",
+    "price": 135000,
+    "stock": 10,
+    "image": "https://via.placeholder.com/300x400/111154/ffffff?text=Web+Dev",
+    "category": "Pemrograman"
+  },
+  {
+    "id": 6,
+    "title": "Mobile App Development",
+    "author": "Sarah Lee",
+    "price": 140000,
+    "stock": 7,
+    "image": "https://via.placeholder.com/300x400/111154/ffffff?text=Mobile",
+    "category": "Pemrograman"
+  }
+]

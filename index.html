@@ -299,8 +299,33 @@
             alert('Login berhasil!');
             // Di sini Anda bisa menambahkan logika login
         });
+
+	// Di form login submission
+	document.getElementById('loginFormElem').addEventListener('submit', function(e) {
+	    e.preventDefault();
+    
+        // Simulate login success
+	    localStorage.setItem('isLoggedIn', 'true');
+	    window.location.href = 'admin.html'; // Redirect to admin page
+	});
+
+	// Di form registrasi submission
+	document.getElementById('registerFormElem').addEventListener('submit', function(e) {
+	    e.preventDefault();
+	    const password = document.getElementById('registerPassword').value;
+	    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+	    if (password !== confirmPassword) {
+        	alert('Password dan konfirmasi password tidak cocok!');
+	        return;
+	    }
+    
+        // Simulate registration success
+        localStorage.setItem('isLoggedIn', 'true');
+	    window.location.href = 'admin.html'; // Redirect to admin page
+	});        
         
-        document.getElementById('registerFormElem').addEventListener('submit', function(e) {
+	document.getElementById('registerFormElem').addEventListener('submit', function(e) {
             e.preventDefault();
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
@@ -309,8 +334,22 @@
                 alert('Password dan konfirmasi password tidak cocok!');
                 return;
             }
-            
-            alert('Pendaftaran berhasil!');
+
+	// Setelah login/register berhasil
+	localStorage.setItem('currentUser', JSON.stringify({
+	    email: email,
+	    name: name,
+	    role: 'user' // atau 'admin' untuk akun admin
+	}));
+
+	// Redirect berdasarkan role
+	if (userRole === 'admin') {
+	    window.location.href = 'admin.html';
+	    } else {
+	    window.location.href = 'index.html';
+	}            
+        
+	    alert('Pendaftaran berhasil!');
             // Di sini Anda bisa menambahkan logika pendaftaran
         });
     </script>

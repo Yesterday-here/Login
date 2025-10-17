@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookStore - Toko Buku Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>BookStore</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link active">Beranda</a></li>
+                    <li class="nav-item"><a href="#products" class="nav-link">Produk</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">Tentang</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Kontak</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="cart.html" class="icon-button cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    <div id="userInfo" style="display: none; align-items: center; margin-left: 15px;">
+                        <span id="userName" style="margin-right: 10px;"></span>
+                        <button class="btn" onclick="logout()" style="padding: 8px 15px;">Logout</button>
+                    </div>
+                    <a href="login.html" class="btn" id="loginBtn" style="margin-left: 15px;">Login</a>
+                    <a href="admin.html" class="icon-button" style="margin-left: 10px;">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Selamat Datang di BookStore</h1>
+            <p>Temukan buku-buku terbaik untuk menambah wawasan dan pengetahuan Anda. Berbagai kategori buku tersedia dengan harga terjangkau.</p>
+            <a href="#products" class="btn">Jelajahi Buku</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title">Koleksi Buku Terbaru</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Produk akan dimuat di sini oleh JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about" style="padding: 80px 0; background-color: white;">
+        <div class="container">
+            <h2 class="section-title">Tentang BookStore</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                    BookStore adalah toko buku online yang menyediakan berbagai macam buku dari berbagai kategori. 
+                    Kami berkomitmen untuk menyediakan buku-buku berkualitas dengan harga yang terjangkau.
+                </p>
+                <p style="font-size: 1.1rem;">
+                    Dengan koleksi lebih dari 1000 judul buku, kami siap memenuhi kebutuhan literasi Anda. 
+                    Nikmati pengalaman berbelanja buku yang mudah, aman, dan menyenangkan.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BookStore</h3>
+                    <p>Toko buku online terpercaya dengan berbagai koleksi buku berkualitas.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak Kami</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Buku No. 123, Jakarta</p>
+                    <p><i class="fas fa-phone"></i> (021) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> info@bookstore.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <a href="index.html">Beranda</a>
+                    <a href="#products">Produk</a>
+                    <a href="#about">Tentang</a>
+                    <a href="login.html">Login</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 BookStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang - BookStore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cart-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .cart-item-image {
+            width: 120px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-author {
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--border-color);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .quantity-btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        .quantity-input {
+            width: 50px;
+            height: 35px;
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-right: none;
+            text-align: center;
+            margin: 0;
+        }
+        
+        .remove-btn {
+            color: #f44336;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .remove-btn:hover {
+            color: #d32f2f;
+        }
+        
+        .cart-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+        
+        .empty-cart h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html" style="color: inherit; text-decoration: none;">BookStore</a></h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Beranda</a></li>
+                    <li class="nav-item"><a href="index.html#products" class="nav-link">Produk</a></li>
+                    <li class="nav-item"><a href="index.html#about" class="nav-link">Tentang</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="cart.html" class="icon-button cart-icon active">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    <div id="userInfo" style="display: none; align-items: center; margin-left: 15px;">
+                        <span id="userName" style="margin-right: 10px;"></span>
+                        <button class="btn" onclick="logout()" style="padding: 8px 15px;">Logout</button>
+                    </div>
+                    <a href="login.html" class="btn" id="loginBtn" style="margin-left: 15px;">Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Cart Content -->
+    <main class="cart-container">
+        <h1 style="margin-bottom: 30px; color: var(--primary-color);">Keranjang Belanja</h1>
+        
+        <div id="cartItems">
+            <!-- Item keranjang akan dimuat di sini -->
+        </div>
+        
+        <div id="cartSummary" class="cart-summary" style="display: none;">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal">Rp 0</span>
+            </div>
+            <div class="summary-row">
+                <span>Ongkos Kirim</span>
+                <span>Rp 15.000</span>
+            </div>
+            <div class="summary-row summary-total">
+                <span>Total</span>
+                <span id="total">Rp 0</span>
+            </div>
+            <button class="btn btn-success btn-block" style="margin-top: 20px;" onclick="checkout()">
+                <i class="fas fa-shopping-bag"></i> Checkout
+            </button>
+        </div>
+        
+        <div id="emptyCart" class="empty-cart" style="display: none;">
+            <i class="fas fa-shopping-cart"></i>
+            <h2>Keranjang Belanja Kosong</h2>
+            <p>Silakan tambahkan produk ke keranjang belanja Anda.</p>
+            <a href="index.html#products" class="btn" style="margin-top: 20px;">Jelajahi Produk</a>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Fungsi untuk memuat keranjang
+        function loadCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartSummary = document.getElementById('cartSummary');
+            const emptyCart = document.getElementById('emptyCart');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '';
+                cartSummary.style.display = 'none';
+                emptyCart.style.display = 'block';
+                return;
+            }
+            
+            emptyCart.style.display = 'none';
+            cartSummary.style.display = 'block';
+            
+            let html = '';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                html += `
+                    <div class="cart-item fade-in">
+                        <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-title">${item.title}</h3>
+                            <p class="cart-item-author">Oleh: ${item.author}</p>
+                            <p class="cart-item-price">Rp ${item.price.toLocaleString()}</p>
+                            
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                                <input type="text" class="quantity-input" value="${item.quantity}" readonly>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                            </div>
+                            
+                            <button class="remove-btn" onclick="removeFromCart(${item.id})">
+                                <i class="fas fa-trash"></i> Hapus
+                            </button>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-weight: 600; font-size: 1.1rem;">Rp ${itemTotal.toLocaleString()}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = html;
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = `Rp ${subtotal.toLocaleString()}`;
+            document.getElementById('total').textContent = `Rp ${(subtotal + 15000).toLocaleString()}`;
+        }
+        
+        // Fungsi untuk update quantity
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+                return;
+            }
+            
+            const item = cart.find(item => item.id === productId);
+            if (item && newQuantity <= item.stock) {
+                item.quantity = newQuantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                loadCart();
+            } else {
+                alert('Stok tidak mencukupi');
+            }
+        }
+        
+        // Fungsi untuk menghapus item dari keranjang
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            loadCart();
+        }
+        
+        // Fungsi checkout
+        function checkout() {
+            if (!currentUser) {
+                alert('Silakan login terlebih dahulu untuk checkout');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Simulasi proses checkout
+            alert('Checkout berhasil! Pesanan Anda sedang diproses.');
+            
+            // Kosongkan keranjang
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            loadCart();
+        }
+        
+        // Muat keranjang saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            loadCart();
+        });
+        
+        window.updateQuantity = updateQuantity;
+        window.removeFromCart = removeFromCart;
+        window.checkout = checkout;
+    </script>
+</body>
+</html>

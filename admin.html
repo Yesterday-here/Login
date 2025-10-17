@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BookStore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        :root {
+            --primary-color: #111154;
+            --secondary-color: #f5f5f5;
+            --accent-color: #4CAF50;
+            --text-color: #333;
+            --light-text: #777;
+            --border-color: #ddd;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0 15px;
+        }
+
+        .menu-item {
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-link i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #0d0d3f;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Form Styles */
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0d0d3f;
+        }
+
+        .btn-success {
+            background-color: var(--accent-color);
+        }
+
+        .btn-success:hover {
+            background-color: #3d8b40;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .whatsapp-btn i {
+            margin-right: 8px;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .menu {
+                display: flex;
+                overflow-x: auto;
+            }
+            
+            .menu-item {
+                flex: 0 0 auto;
+                margin-right: 10px;
+            }
+            
+            .menu-link span {
+                display: none;
+            }
+            
+            .menu-link i {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h1>BookStore Admin</h1>
+        </div>
+        <ul class="menu">
+            <li class="menu-item active" data-target="transactions">
+                <a href="#" class="menu-link">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li>
+            <li class="menu-item" data-target="checkouts">
+                <a href="#" class="menu-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Daftar Checkout</span>
+                </a>
+            </li>
+            <li class="menu-item" data-target="update-books">
+                <a href="#" class="menu-link">
+                    <i class="fas fa-book"></i>
+                    <span>Update Buku</span>
+                </a>
+            </li>
+            <li class="menu-item" data-target="add-books">
+                <a href="#" class="menu-link">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tambah Buku</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <div>
+                    <div class="user-name">Admin BookStore</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+
+        <!-- Transactions Section -->
+        <div class="content-section active" id="transactions">
+            <h2 class="section-title">Transaksi</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Buku</th>
+                            <th>Jumlah</th>
+                            <th>Stok</th>
+                            <th>Harga</th>
+                            <th>Total Harga</th>
+                            <th>Payment</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pemrograman JavaScript</td>
+                            <td>2</td>
+                            <td>15</td>
+                            <td>Rp 120.000</td>
+                            <td>Rp 240.000</td>
+                            <td>Transfer Bank</td>
+                            <td>
+                                <a href="#" class="whatsapp-btn">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Desain UI/UX Modern</td>
+                            <td>1</td>
+                            <td>8</td>
+                            <td>Rp 95.000</td>
+                            <td>Rp 95.000</td>
+                            <td>E-Wallet</td>
+                            <td>
+                                <a href="#" class="whatsapp-btn">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Machine Learning untuk Pemula</td>
+                            <td>3</td>
+                            <td>12</td>
+                            <td>Rp 150.000</td>
+                            <td>Rp 450.000</td>
+                            <td>Kartu Kredit</td>
+                            <td>
+                                <a href="#" class="whatsapp-btn">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Checkouts Section -->
+        <div class="content-section" id="checkouts">
+            <h2 class="section-title">Daftar Buku yang Sudah Checkout</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Buku</th>
+                            <th>Pelanggan</th>
+                            <th>Tanggal Checkout</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Pemrograman JavaScript</td>
+                            <td>Budi Santoso</td>
+                            <td>17 Okt 2023</td>
+                            <td>Selesai</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Desain UI/UX Modern</td>
+                            <td>Sari Indah</td>
+                            <td>16 Okt 2023</td>
+                            <td>Dalam Pengiriman</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Machine Learning untuk Pemula</td>
+                            <td>Rizki Pratama</td>
+                            <td>15 Okt 2023</td>
+                            <td>Selesai</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Database Management</td>
+                            <td>Dewi Anggraini</td>
+                            <td>14 Okt 2023</td>
+                            <td>Dalam Pengiriman</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Update Books Section -->
+        <div class="content-section" id="update-books">
+            <h2 class="section-title">Update Stok Buku</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Judul Buku</th>
+                            <th>Penulis</th>
+                            <th>Stok</th>
+                            <th>Harga</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Pemrograman JavaScript</td>
+                            <td>John Doe</td>
+                            <td>15</td>
+                            <td>Rp 120.000</td>
+                            <td>
+                                <button class="btn">Update Stok</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Desain UI/UX Modern</td>
+                            <td>Jane Smith</td>
+                            <td>8</td>
+                            <td>Rp 95.000</td>
+                            <td>
+                                <button class="btn">Update Stok</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Machine Learning untuk Pemula</td>
+                            <td>Robert Brown</td>
+                            <td>12</td>
+                            <td>Rp 150.000</td>
+                            <td>
+                                <button class="btn">Update Stok</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Database Management</td>
+                            <td>Lisa Johnson</td>
+                            <td>5</td>
+                            <td>Rp 110.000</td>
+                            <td>
+                                <button class="btn">Update Stok</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Add Books Section -->
+        <div class="content-section" id="add-books">
+            <h2 class="section-title">Tambah Buku Baru</h2>
+            
+            <div class="form-container">
+                <form id="addBookForm">
+                    <div class="form-group">
+                        <label for="bookTitle">Judul Buku</label>
+                        <input type="text" id="bookTitle" class="form-control" placeholder="Masukkan judul buku" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bookAuthor">Penulis</label>
+                        <input type="text" id="bookAuthor" class="form-control" placeholder="Masukkan nama penulis" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bookStock">Stok</label>
+                        <input type="number" id="bookStock" class="form-control" placeholder="Masukkan jumlah stok" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bookPrice">Harga</label>
+                        <input type="number" id="bookPrice" class="form-control" placeholder="Masukkan harga buku" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bookDescription">Deskripsi</label>
+                        <textarea id="bookDescription" class="form-control" rows="4" placeholder="Masukkan deskripsi buku"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">Tambah Buku</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = 'login.html'; // Redirect to login if not authenticated
+        }
+	
+	// Cek status login di admin.html
+	const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	if (!currentUser || currentUser.role !== 'admin') {
+	    window.location.href = 'login.html';
+	}
+        
+	// Menu Navigation
+        const menuItems = document.querySelectorAll('.menu-item');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                
+                // Remove active class from all menu items and content sections
+                menuItems.forEach(i => i.classList.remove('active'));
+                contentSections.forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked menu item and corresponding content section
+                this.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // Logout Functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
+        });
+
+        // Add Book Form Submission
+        document.getElementById('addBookForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('bookTitle').value;
+            const author = document.getElementById('bookAuthor').value;
+            const stock = document.getElementById('bookStock').value;
+            const price = document.getElementById('bookPrice').value;
+            
+            // In a real app, you would send this data to a server
+            alert(`Buku "${title}" berhasil ditambahkan!\n\nDetail:\nPenulis: ${author}\nStok: ${stock}\nHarga: Rp ${price}`);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // WhatsApp Integration
+        const w
